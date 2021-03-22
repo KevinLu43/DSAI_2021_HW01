@@ -14,10 +14,10 @@ from loguru import logger
 # User Module Import
 @logger.catch
 def train(train_list, test_list):
-    
+
     model_train = make_pipeline(StandardScaler(), SVR(epsilon=0.2, kernel='linear', coef0=0.0))
     # model_all = make_pipeline(StandardScaler(), SVR(C=1.0, epsilon=0.2))
-    
+
     X_train = list()
     Y_train = list()
     X_test = list()
@@ -35,7 +35,7 @@ def train(train_list, test_list):
     infres = clf.predict(X_test)
 
     for i in range(len(infres)):
-       infres[i] = infres[i] + np.random.uniform(low=30.0, high=40.0, size=(7,))
+       infres[i] = infres[i] + np.random.uniform(low=0.0, high=50.0, size=(7,))
 
     clf_all = MultiOutputRegressor(model_train).fit(X_train + X_test, Y_train + Y_test)
 
@@ -48,4 +48,4 @@ def train(train_list, test_list):
 
 @logger.catch
 def inference(model, df_input):
-    return model.predict([df_input["備轉容量(MW)"]]) # + np.random.uniform(low=-20.0, high=100.0, size=(7,))
+    return model.predict([df_input["備轉容量(MW)"]]) + np.random.uniform(low=0.0, high=50.0, size=(7,))
