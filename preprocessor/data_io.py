@@ -22,7 +22,7 @@ def get_TaiPower_or_data():
 
     req = requests.get(url, allow_redirects=True)
 
-    open(f"./datasets/original/{filename}", 'wb').write(req.content)
+    open(f"./datasets/{filename}", 'wb').write(req.content)
 
 
 @logger.catch

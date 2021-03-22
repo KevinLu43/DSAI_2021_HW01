@@ -36,7 +36,7 @@ if __name__ == "__main__":
                         default='2021/03/03',
                         help='Threshold for spliting training and testing data before specific date')
     args = parser.parse_args()
-    logger.debug(f"Training data input csv file    -> ./datasets/original/{args.training}")
+    logger.debug(f"Training data input csv file    -> ./datasets/{args.training}")
     logger.debug(f"Model Prediction Outcome Output -> ./output/deploy/{args.output}")
     logger.debug(f"Run TaiPower Data Crawler       -> {not args.no_crawling}")
     logger.critical(f"Dataset Date Threshold          -> {args.dataset_date_threshold}")
@@ -45,13 +45,13 @@ if __name__ == "__main__":
     #--------------------------------------------------------------
     logger.success("<---------------Crawler Phase--------------->")
     logger.critical(f"!!!!!PLEASE NOTE THAT data for training phase only utilizes data before {args.dataset_date_threshold} for fairness!!!!!")
-    
+
     if not args.no_crawling:
         logger.info("Download data from TaiPower Company...")
         data_io.get_TaiPower_or_data()
 
     logger.info("Read csv data for operating reserve")
-    or_data = data_io.read_csv_to_pandas_df(f"datasets/original/{args.training}")
+    or_data = data_io.read_csv_to_pandas_df(f"datasets/{args.training}")
 
     logger.info(f"Remove data after {args.dataset_date_threshold}")
     time_inrange = lambda x: datetime.strptime(x, "%Y/%m/%d") <= datetime.strptime(args.dataset_date_threshold, "%Y/%m/%d")
